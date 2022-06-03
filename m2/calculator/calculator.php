@@ -5,7 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>My calculator</title>
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <h1>My calculator</h1>
@@ -27,13 +28,13 @@
 
         <p>
             <!-- Input 1 -->
-            <label for="input1">Input 1</label>
+            <label for="input1">Input 1: </label>
             <input type="number" name="input1" id="input1">
         </p>
 
         <p>
             <!-- Input 2 -->
-            <label for="input2">Input 2</label>
+            <label for="input2">Input 2: </label>
             <input type="number" name="input2" id="input2">
         </p>
 
@@ -67,7 +68,7 @@
     }
 
     if (isset($_POST["action"]) and isset($_POST["input1"]) and isset($_POST["input2"])) {
-        print(calculate($_POST["action"], $_POST["input1"], $_POST["input2"]));
+        printf("Output: %s", calculate($_POST["action"], $_POST["input1"], $_POST["input2"]));
     }
     ?>
 </body>
