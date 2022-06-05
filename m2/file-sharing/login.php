@@ -1,4 +1,5 @@
 <?php
+require_once "constants.php";
 session_start();
 ?>
 
@@ -26,8 +27,7 @@ session_start();
     </form>
 
     <?php
-    $usernames = file("/srv/data/file-sharing/users.txt")
+    $usernames = file(sprintf("%s/users.txt", DATA_ROOT))
     ?>
-
 </body>
 </html>
