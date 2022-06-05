@@ -1,8 +1,28 @@
 <?php
 require_once "constants.php";
 session_start();
-?>
 
+$error = null;
+
+function login(string $username) {
+    global $error;
+
+    $usernames_file = sprintf("%s/usernames.txt", DATA_ROOT);
+    $usernames_array = explode("\n", file_get_contents($usernames_file));
+
+    if (in_array($username, $usernames_array)) {
+        $_SESSION['username'] = $username;
+        header("Location: files.php");
+        exit();
+    } else {
+        $error = "Not a valid username.";
+    }
+}
+
+if (isset($_POST["username"])) {
+    login($_POST["username"]);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,21 +46,12 @@ session_start();
         </p>
     </form>
 
-    <?php
-    function login(string $username) {
-        $usernames_file = sprintf("%s/usernames.txt", DATA_ROOT);
-        $usernames_array = explode("\n", file_get_contents($usernames_file));
-
-        if (in_array($username, $usernames_array)) {
-            printf("Account found for username: %s", $username);
-        } else {
-            printf("No account found for username: %s", $username);
+    <p>
+        <?php
+        if (isset($error)) {
+            print($error);
         }
-    }
-
-    if (isset($_POST["username"])) {
-        login($_POST["username"]);
-    }
-    ?>
+        ?>
+    </p>
 </body>
 </html>
