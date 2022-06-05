@@ -27,7 +27,20 @@ session_start();
     </form>
 
     <?php
-    $usernames = file(sprintf("%s/usernames.txt", DATA_ROOT))
+    function login(string $username) {
+        $usernames_array = file(sprintf("%s/usernames.txt", DATA_ROOT));
+        print_r($usernames_array); # Debug only
+
+        if (in_array($username, $usernames_array)) {
+            printf("Account found for username: %s", $username);
+        } else {
+            printf("No account found for username: %s", $username);
+        }
+    }
+
+    if (isset($_POST["username"])) {
+        login($_POST["username"]);
+    }
     ?>
 </body>
 </html>
