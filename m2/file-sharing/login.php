@@ -27,7 +27,7 @@ session_start();
     </form>
 
     <?php
-    $usernames = file(sprintf("%s/users.txt", DATA_ROOT))
+    $usernames = file(sprintf("%s/usernames.txt", DATA_ROOT))
     ?>
 </body>
 </html>
