@@ -28,8 +28,8 @@ session_start();
 
     <?php
     function login(string $username) {
-        $usernames_array = file(sprintf("%s/usernames.txt", DATA_ROOT));
-        print_r($usernames_array); # Debug only
+        $usernames_file = sprintf("%s/usernames.txt", DATA_ROOT);
+        $usernames_array = explode("\n", file_get_contents($usernames_file));
 
         if (in_array($username, $usernames_array)) {
             printf("Account found for username: %s", $username);
