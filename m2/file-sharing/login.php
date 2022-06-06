@@ -1,4 +1,8 @@
 <?php
+/**
+ * The login page.
+ */
+
 require_once "constants.php";
 session_start();
 

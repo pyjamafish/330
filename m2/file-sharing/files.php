@@ -1,4 +1,9 @@
 <?php
+/**
+ * The main page for accessing files.
+ * A user must first log in (using login.php) to see this page.
+ */
+
 session_start();
 # https://stackoverflow.com/a/15088537
 if(!isset($_SESSION['username'])){
