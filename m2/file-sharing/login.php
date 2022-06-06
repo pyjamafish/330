@@ -16,7 +16,7 @@ function login(string $username) {
 
     if (in_array($username, $usernames_array)) {
         $_SESSION['username'] = $username;
-        header("Location: files.php");
+        header("Location: main.php");
         exit();
     } else {
         $error = "Account not found";

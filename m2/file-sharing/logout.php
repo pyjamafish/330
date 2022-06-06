@@ -1,7 +1,7 @@
 <?php
 /**
  * This file handles logging out.
- * It's called when a user clicks the logout button in files.php.
+ * It's called when a user clicks the logout button in main.php.
  */
 
 session_start();
