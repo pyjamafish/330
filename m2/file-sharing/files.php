@@ -31,6 +31,7 @@ if(!isset($_SESSION['username'])){
         <input name="uploaded-file" type="file" />
         <input type="submit" value="Upload" />
     </form>
-    <h2>Files</h2>
+
+    <h2>Download</h2>
 </body>
 </html>
