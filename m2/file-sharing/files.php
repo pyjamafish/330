@@ -17,6 +17,15 @@ if(!isset($_SESSION['username'])){
 </head>
 <body>
     <h1>File Sharing</h1>
+    <p>
+        <?php
+        printf("Logged in as %s", $_SESSION['username'])
+        ?>
+    </p>
+    <p>
+        <a href="logout.php">(Logout)</a>
+    </p>
+
     <h2>Upload</h2>
     <h2>Files</h2>
 </body>
