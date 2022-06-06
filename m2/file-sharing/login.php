@@ -15,7 +15,7 @@ function login(string $username) {
         header("Location: files.php");
         exit();
     } else {
-        $error = "Not a valid username.";
+        $error = "No account found.";
     }
 }
 
