@@ -21,9 +21,7 @@ if(!isset($_SESSION['username'])){
         <?php
         printf("Logged in as %s", $_SESSION['username'])
         ?>
-    </p>
-    <p>
-        <a href="logout.php">(Logout)</a>
+        <a href="logout.php">(log out)</a>
     </p>
 
     <h2>Upload</h2>
