@@ -27,6 +27,12 @@ if(!isset($_SESSION['username'])){
     </p>
 
     <h2>Upload</h2>
+    <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
+    <form enctype="multipart/form-data" action="upload.php" method="POST">
+        <input type="hidden" name="MAX_FILE_SIZE" value="8000000" /> <!-- 8MB -->
+        <input name="uploaded-file" type="file" />
+        <input type="submit" value="Upload" />
+    </form>
     <h2>Files</h2>
 </body>
 </html>
