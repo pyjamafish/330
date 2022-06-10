@@ -11,7 +11,7 @@ $error = null;
 function login(string $username) {
     global $error;
 
-    $usernames_file = sprintf("%s/usernames.txt", DATA_ROOT);
+    $usernames_file = sprintf("%s/users.txt", DATA_ROOT);
     $usernames_array = explode("\n", file_get_contents($usernames_file));
 
     if (in_array($username, $usernames_array)) {
