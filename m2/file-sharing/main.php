@@ -24,6 +24,24 @@ function upload(): bool
     # https://www.php.net/manual/en/features.file-upload.post-method.php
     return move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest);
 }
+
+function get_files_array(): array
+{
+    $user_dir = sprintf("%s/%s", DATA_ROOT, $_SESSION['username']);
+    return scandir($user_dir);
+}
+
+function get_files_table(): string
+{
+    $table = "<table>";
+    foreach (get_files_array() as $file) {
+        $table .= "<tr>";
+        $table .= "<td> $file </td>";
+        $table .= "</tr>";
+    }
+    $table .= "</table>";
+    return $table;
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,5 +82,8 @@ function upload(): bool
     </p>
 
     <h2>Download</h2>
+    <?php
+        print(get_files_table())
+    ?>
 </body>
 </html>
