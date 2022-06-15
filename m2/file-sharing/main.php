@@ -25,10 +25,23 @@ function upload(): bool
     return move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest);
 }
 
+
+/**
+ * Returns true if the given file should be displayed.
+ * The "." and ".." files should not be displayed.
+ * This function is used as the filter in get_files_array.
+ * @param $file
+ * @return bool
+ */
+function is_displayed_file($file): bool {
+    return $file != "." && $file != "..";
+}
+
 function get_files_array(): array
 {
     $user_dir = sprintf("%s/%s", DATA_ROOT, $_SESSION['username']);
-    return scandir($user_dir);
+    $ls = scandir($user_dir);
+    return array_filter($ls, "is_displayed_file");
 }
 
 function get_files_table(): string
