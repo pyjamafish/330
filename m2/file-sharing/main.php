@@ -98,5 +98,7 @@ function get_files_table(): string
     <?php
         print(get_files_table())
     ?>
+
+    <h2>Download all files</h2>
 </body>
 </html>
