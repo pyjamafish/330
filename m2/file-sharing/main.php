@@ -12,7 +12,7 @@ if(!isset($_SESSION['username'])){
     exit;
 }
 
-function upload(): string
+function upload(): bool
 {
     $upload_dest = sprintf(
         "%s/%s/%s",
@@ -22,11 +22,7 @@ function upload(): string
     );
 
     # https://www.php.net/manual/en/features.file-upload.post-method.php
-    if (move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest)) {
-        return "File successfully uploaded.";
-    } else {
-        return "An error occurred. File not uploaded.";
-    }
+    return move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest);
 }
 ?>
 
@@ -54,11 +50,19 @@ function upload(): string
         <input name="uploaded-file" type="file" />
         <input type="submit" value="Upload" />
     </form>
-    <?php
-    if (isset($_FILES['uploaded-file'])) {
-        print(upload());
-    }
-    ?>
+
+    <p>
+        <?php
+        if (isset($_FILES['uploaded-file'])) {
+            if (upload()) {
+                printf("%s successfully uploaded.", $_FILES['uploaded-file']['name']);
+            } else {
+                printf("An error occurred. %s not uploaded.", $_FILES['uploaded-file']['name']);
+            }
+        }
+        ?>
+    </p>
+
     <h2>Download</h2>
 </body>
 </html>
