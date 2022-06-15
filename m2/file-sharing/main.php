@@ -74,7 +74,7 @@ function get_files_table(): string
         <a href="logout.php">(log out)</a>
     </p>
 
-    <h2>Upload</h2>
+    <h2>Upload a file</h2>
     <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
     <form enctype="multipart/form-data" method="POST">
         <input type="hidden" name="MAX_FILE_SIZE" value="8000000" /> <!-- 8MB -->
@@ -94,7 +94,7 @@ function get_files_table(): string
         ?>
     </p>
 
-    <h2>Download</h2>
+    <h2>My files</h2>
     <?php
         print(get_files_table())
     ?>
