@@ -1,14 +1,14 @@
 <?php
 /**
  * The main page for accessing files.
- * A user must first log in (using login.php) to see this page.
+ * A user must first sign in (using sign_in.php) to see this page.
  */
 require_once("constants.php");
 
 session_start();
 # https://stackoverflow.com/a/15088537
 if(!isset($_SESSION['username'])){
-    header("Location:login.php");
+    header("Location:sign_in.php");
     exit;
 }
 
@@ -69,9 +69,9 @@ function get_files_table(): string
     <h1>File Sharing</h1>
     <p>
         <?php
-        printf("Logged in as %s", $_SESSION['username'])
+        printf("Signed in as %s", $_SESSION['username'])
         ?>
-        <a href="logout.php">(log out)</a>
+        <a href="sign_out.php">(sign out)</a>
     </p>
 
     <h2>Upload a file</h2>

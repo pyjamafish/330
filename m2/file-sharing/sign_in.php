@@ -1,6 +1,6 @@
 <?php
 /**
- * The login page.
+ * The sign-in page.
  */
 
 require_once "constants.php";
@@ -8,7 +8,7 @@ session_start();
 
 $error = null;
 
-function login(string $username) {
+function sign_in(string $username) {
     global $error;
 
     $usernames_file = sprintf("%s/users.txt", DATA_ROOT);
@@ -24,7 +24,7 @@ function login(string $username) {
 }
 
 if (isset($_POST["username"])) {
-    login($_POST["username"]);
+    sign_in($_POST["username"]);
 }
 ?>
 <!DOCTYPE html>
@@ -33,12 +33,12 @@ if (isset($_POST["username"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign in</title>
 </head>
 <body>
     <h1>File Sharing</h1>
 
-    <h2>Login</h2>
+    <h2>Sign in</h2>
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
         <p>
             <label for="username">Username: </label>
@@ -46,7 +46,7 @@ if (isset($_POST["username"])) {
         </p>
 
         <p>
-            <input type="submit" value="Log in">
+            <input type="submit" value="Submit">
         </p>
     </form>
 
