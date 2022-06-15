@@ -3,12 +3,30 @@
  * The main page for accessing files.
  * A user must first log in (using login.php) to see this page.
  */
+require_once("constants.php");
 
 session_start();
 # https://stackoverflow.com/a/15088537
 if(!isset($_SESSION['username'])){
     header("Location:login.php");
     exit;
+}
+
+function upload(): string
+{
+    $upload_dest = sprintf(
+        "%s/%s/%s",
+        DATA_ROOT,
+        $_SESSION['username'],
+        basename($_FILES['uploaded-file']['name'])
+    );
+
+    # https://www.php.net/manual/en/features.file-upload.post-method.php
+    if (move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest)) {
+        return "File successfully uploaded.";
+    } else {
+        return "An error occurred. File not uploaded.";
+    }
 }
 ?>
 
@@ -31,12 +49,16 @@ if(!isset($_SESSION['username'])){
 
     <h2>Upload</h2>
     <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
-    <form enctype="multipart/form-data" action="upload.php" method="POST">
+    <form enctype="multipart/form-data" method="POST">
         <input type="hidden" name="MAX_FILE_SIZE" value="8000000" /> <!-- 8MB -->
         <input name="uploaded-file" type="file" />
         <input type="submit" value="Upload" />
     </form>
-
+    <?php
+    if (isset($_FILES['uploaded-file'])) {
+        print(upload());
+    }
+    ?>
     <h2>Download</h2>
 </body>
 </html>
