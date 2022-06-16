@@ -16,8 +16,8 @@ function upload(): bool
 {
     $filename = basename($_FILES['uploaded-file']['name']);
     # Exit early if the file has an invalid name.
-    # https://classes.engineering.wustl.edu/cse330/index.php?title=PHP#Sending_a_File_to_the_Browser
-    if (!preg_match('/^[\w_.\-]+$/', $filename)) {
+    # Regex modified from the 330 wiki to allow spaces.
+    if (!preg_match('/^[\w_.\- ]+$/', $filename)) {
         return false;
     }
 
