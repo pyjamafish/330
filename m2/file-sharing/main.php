@@ -7,7 +7,7 @@ require_once("constants.php");
 
 session_start();
 # https://stackoverflow.com/a/15088537
-if(!isset($_SESSION['username'])){
+if (!isset($_SESSION['username'])) {
     header("Location:sign_in.php");
     exit;
 }
@@ -33,7 +33,8 @@ function upload(): bool
  * @param $file
  * @return bool
  */
-function is_displayed_file($file): bool {
+function is_displayed_file($file): bool
+{
     return $file != "." && $file != "..";
 }
 
@@ -59,6 +60,7 @@ function get_files_table(): string
     $table .= "</table>";
     return $table;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -81,9 +83,9 @@ function get_files_table(): string
     <h2>Upload a file</h2>
     <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
     <form enctype="multipart/form-data" method="POST">
-        <input type="hidden" name="MAX_FILE_SIZE" value="8000000" /> <!-- 8MB -->
-        <input name="uploaded-file" type="file" />
-        <input type="submit" value="Upload" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="8000000"/> <!-- 8MB -->
+        <input name="uploaded-file" type="file"/>
+        <input type="submit" value="Upload"/>
     </form>
 
     <p>
@@ -100,7 +102,7 @@ function get_files_table(): string
 
     <h2>My files</h2>
     <?php
-        print(get_files_table())
+    print(get_files_table())
     ?>
 
     <h2>Download all files</h2>

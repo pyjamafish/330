@@ -8,7 +8,8 @@ session_start();
 
 $error = null;
 
-function sign_in(string $username) {
+function sign_in(string $username)
+{
     global $error;
 
     $usernames_file = sprintf("%s/users.txt", DATA_ROOT);
