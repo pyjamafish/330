@@ -101,10 +101,11 @@ function get_files_table(): string
     <p>
         <?php
         if (isset($_FILES['uploaded-file'])) {
+            $escaped_filename = htmlspecialchars($_FILES['uploaded-file']['name']);
             if (upload()) {
-                printf("%s successfully uploaded.", $_FILES['uploaded-file']['name']);
+                printf("%s successfully uploaded.", $escaped_filename);
             } else {
-                printf("Invalid file or filename. %s not uploaded.", $_FILES['uploaded-file']['name']);
+                printf("Invalid file or filename. %s not uploaded.", $escaped_filename);
             }
         }
         ?>
