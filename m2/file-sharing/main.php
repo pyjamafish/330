@@ -52,8 +52,8 @@ function get_files_table(): string
         $table .= <<<EOD
             <tr>
                 <td> $file </td>
-                <td> View </td>
-                <td> Download </td>
+                <td><a href="./actions/open.php?file=$file">Open</a></td>
+                <td><a href="./actions/delete.php?file=$file">Delete</a></td>
             </tr>
         EOD;
     }
