@@ -59,8 +59,8 @@ function get_files_table(): string
         $table .= <<<EOD
             <tr>
                 <td> $file </td>
-                <td><a href="./actions/open.php?file=$file">Open</a></td>
-                <td><a href="./actions/delete.php?file=$file">Delete</a></td>
+                <td><a href="file_actions.php?file=$file&action=view">View</a></td>
+                <td><a href="file_actions.php?file=$file&action=delete">Delete</a></td>
             </tr>
         EOD;
     }
@@ -85,7 +85,7 @@ function get_files_table(): string
 
     <p>
         <?php
-        printf("Signed in as %s", $_SESSION['username'])
+        printf("Signed in as %s", htmlspecialchars($_SESSION['username']));
         ?>
         <a href="sign_out.php">(sign out)</a>
     </p>
