@@ -14,11 +14,18 @@ if (!isset($_SESSION['username'])) {
 
 function upload(): bool
 {
+    $filename = basename($_FILES['uploaded-file']['name']);
+    # Exit early if the file has an invalid name.
+    # https://classes.engineering.wustl.edu/cse330/index.php?title=PHP#Sending_a_File_to_the_Browser
+    if (!preg_match('/^[\w_.\-]+$/', $filename)) {
+        return false;
+    }
+
     $upload_dest = sprintf(
         "%s/%s/%s",
         DATA_ROOT,
         $_SESSION['username'],
-        basename($_FILES['uploaded-file']['name'])
+        $filename
     );
 
     # https://www.php.net/manual/en/features.file-upload.post-method.php
@@ -97,7 +104,7 @@ function get_files_table(): string
             if (upload()) {
                 printf("%s successfully uploaded.", $_FILES['uploaded-file']['name']);
             } else {
-                printf("An error occurred. %s not uploaded.", $_FILES['uploaded-file']['name']);
+                printf("Invalid file or filename. %s not uploaded.", $_FILES['uploaded-file']['name']);
             }
         }
         ?>
