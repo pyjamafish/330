@@ -37,7 +37,9 @@ if (isset($_POST["username"])) {
     <title>Sign in</title>
 </head>
 <body>
-    <h1>File Sharing</h1>
+    <header>
+        <h1>File Sharing</h1>
+    </header>
 
     <h2>Sign in</h2>
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">

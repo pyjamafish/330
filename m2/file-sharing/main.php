@@ -72,7 +72,10 @@ function get_files_table(): string
     <title>Files</title>
 </head>
 <body>
-    <h1>File Sharing</h1>
+    <header>
+        <h1>File Sharing</h1>
+    </header>
+
     <p>
         <?php
         printf("Signed in as %s", $_SESSION['username'])
