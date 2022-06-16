@@ -48,9 +48,13 @@ function get_files_table(): string
 {
     $table = "<table>";
     foreach (get_files_array() as $file) {
-        $table .= "<tr>";
-        $table .= "<td> $file </td>";
-        $table .= "</tr>";
+        $table .= <<<EOD
+            <tr>
+                <td> $file </td>
+                <td> View </td>
+                <td> Download </td>
+            </tr>
+        EOD;
     }
     $table .= "</table>";
     return $table;
