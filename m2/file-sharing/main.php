@@ -111,7 +111,7 @@ function get_disk_usage_string($username): string
     <h2>Upload a file</h2>
     <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
     <form enctype="multipart/form-data" method="POST">
-        <input type="hidden" name="MAX_FILE_SIZE" value="8000000"/> <!-- 8MB -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="128000000"/> <!-- 128MB -->
         <input name="uploaded-file" type="file"/>
         <input type="submit" value="Upload"/>
     </form>
