@@ -120,7 +120,7 @@ function get_disk_usage_string($username): string
         <?php
         printf("Signed in as %s", htmlspecialchars($_SESSION['username']));
         ?>
-        <a href="sign_out.php">(sign out)</a>
+        (<a href="sign_out.php">sign out</a>)
     </p>
 
     <h2>Upload a file</h2>
