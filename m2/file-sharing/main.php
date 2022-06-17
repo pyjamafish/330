@@ -12,13 +12,26 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
+/**
+ * @throws InvalidFilenameException
+ * @throws InvalidUsernameException
+ * @throws QuotaExceededException
+ * @throws FileTooLargeException
+ */
 function upload($username, $file): bool
 {
+    assert_valid_username($username);
+
     $filename = basename($file['name']);
-    # Exit early if the file has an invalid name.
-    # Regex modified from the 330 wiki to allow spaces.
-    if (!preg_match('/^[\w_.\- ]+$/', $filename)) {
-        return false;
+    assert_valid_filename($filename);
+
+    # https://stackoverflow.com/a/29256841
+    if ($file['error'] == 2) {
+        throw new FileTooLargeException();
+    }
+
+    if ($file['size'] + get_disk_usage_bytes($username) > QUOTA_BYTES) {
+        throw new QuotaExceededException();
     }
 
     $upload_dest = sprintf(
@@ -68,7 +81,7 @@ function get_files_table($username): string
     return $table;
 }
 
-function get_disk_usage_mb($username): float
+function get_disk_usage_bytes($username): int
 {
     $user_dir = DATA_ROOT . "/" . $username;
 
@@ -77,13 +90,14 @@ function get_disk_usage_mb($username): float
         $bytes_total += filesize($user_dir . "/" . $file);
     }
 
-    return $bytes_total / 1048576;
+    return $bytes_total;
 }
 
 function get_disk_usage_string($username): string
 {
-    $disk_usage_mb = get_disk_usage_mb($username);
-    return sprintf("%.2f MB / 128 MB", $disk_usage_mb);
+    $disk_usage_mb = get_disk_usage_bytes($username) / 1000000;
+    $quota_mb = QUOTA_BYTES / 1000000;
+    return sprintf("%.2f MB / %.2f MB", $disk_usage_mb, $quota_mb);
 }
 
 ?>
@@ -111,7 +125,7 @@ function get_disk_usage_string($username): string
     <h2>Upload a file</h2>
     <!-- https://www.php.net/manual/en/features.file-upload.post-method.php -->
     <form enctype="multipart/form-data" method="POST">
-        <input type="hidden" name="MAX_FILE_SIZE" value="128000000"/> <!-- 128MB -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000"/> <!-- 2MB -->
         <input name="uploaded-file" type="file"/>
         <input type="submit" value="Upload"/>
     </form>
@@ -119,12 +133,18 @@ function get_disk_usage_string($username): string
     <p>
         <?php
         if (isset($_FILES['uploaded-file'])) {
-            $upload_result = upload($_SESSION['username'], $_FILES['uploaded-file']);
             $escaped_filename = htmlspecialchars($_FILES['uploaded-file']['name']);
-            if ($upload_result) {
+            try {
+                upload($_SESSION['username'], $_FILES['uploaded-file']);
                 printf("%s successfully uploaded.", $escaped_filename);
-            } else {
-                printf("Invalid file or filename. %s not uploaded.", $escaped_filename);
+            } catch (InvalidFilenameException $e) {
+                printf("Invalid filename. %s not uploaded.", $escaped_filename);
+            } catch (InvalidUsernameException $e) {
+                echo "Your username appears to be invalid. Please contact the webmaster for help.";
+            } catch (QuotaExceededException $e) {
+                printf("Quota exceeded. %s not uploaded.", $escaped_filename);
+            } catch (FileTooLargeException $e) {
+                printf("File %s exceeds the server's max file size. Not uploaded.", $escaped_filename);
             }
         }
         ?>
