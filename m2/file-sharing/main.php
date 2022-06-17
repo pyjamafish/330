@@ -12,9 +12,9 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-function upload(): bool
+function upload($username, $file): bool
 {
-    $filename = basename($_FILES['uploaded-file']['name']);
+    $filename = basename($file['name']);
     # Exit early if the file has an invalid name.
     # Regex modified from the 330 wiki to allow spaces.
     if (!preg_match('/^[\w_.\- ]+$/', $filename)) {
@@ -24,12 +24,12 @@ function upload(): bool
     $upload_dest = sprintf(
         "%s/%s/%s",
         DATA_ROOT,
-        $_SESSION['username'],
+        $username,
         $filename
     );
 
     # https://www.php.net/manual/en/features.file-upload.post-method.php
-    return move_uploaded_file($_FILES['uploaded-file']['tmp_name'], $upload_dest);
+    return move_uploaded_file($file['tmp_name'], $upload_dest);
 }
 
 
@@ -45,17 +45,17 @@ function is_displayed_file($file): bool
     return $file != "." && $file != "..";
 }
 
-function get_files_array(): array
+function get_files_array($username): array
 {
-    $user_dir = sprintf("%s/%s", DATA_ROOT, $_SESSION['username']);
+    $user_dir = sprintf("%s/%s", DATA_ROOT, $username);
     $ls = scandir($user_dir);
     return array_filter($ls, "is_displayed_file");
 }
 
-function get_files_table(): string
+function get_files_table($username): string
 {
     $table = "<table>";
-    foreach (get_files_array() as $file) {
+    foreach (get_files_array($username) as $file) {
         $table .= <<<EOD
             <tr>
                 <td> $file </td>
@@ -120,7 +120,7 @@ function get_disk_usage_string($username): string
         <?php
         if (isset($_FILES['uploaded-file'])) {
             $escaped_filename = htmlspecialchars($_FILES['uploaded-file']['name']);
-            if (upload()) {
+            if (upload($_SESSION['username'], $_FILES['uploaded-file'])) {
                 printf("%s successfully uploaded.", $escaped_filename);
             } else {
                 printf("Invalid file or filename. %s not uploaded.", $escaped_filename);
@@ -131,7 +131,7 @@ function get_disk_usage_string($username): string
 
     <h2>My files</h2>
     <?php
-    print(get_files_table())
+    print(get_files_table($_SESSION['username']))
     ?>
 
     <h2>Disk usage</h2>
