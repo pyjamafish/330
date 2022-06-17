@@ -68,6 +68,24 @@ function get_files_table(): string
     return $table;
 }
 
+function get_disk_usage_mb($username): float
+{
+    $user_dir = DATA_ROOT . "/" . $username;
+
+    $bytes_total = 0;
+    foreach(scandir($user_dir) as $file){
+        $bytes_total += filesize($user_dir . "/" . $file);
+    }
+
+    return $bytes_total / 1048576;
+}
+
+function get_disk_usage_string($username): string
+{
+    $disk_usage_mb = get_disk_usage_mb($username);
+    return sprintf("%.2f MB / 128 MB", $disk_usage_mb);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -116,6 +134,9 @@ function get_files_table(): string
     print(get_files_table())
     ?>
 
-    <h2>Download all files</h2>
+    <h2>Disk usage</h2>
+    <?php
+    print(get_disk_usage_string($_SESSION['username']))
+    ?>
 </body>
 </html>
