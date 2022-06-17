@@ -156,9 +156,11 @@ function get_disk_usage_string($username): string
     print(get_files_table($_SESSION['username']))
     ?>
 
-    <h2>Disk usage</h2>
-    <?php
-    print(get_disk_usage_string($_SESSION['username']))
-    ?>
+    <p>
+        <?php
+        print(get_disk_usage_string($_SESSION['username']))
+        ?>
+    </p>
+
 </body>
 </html>
