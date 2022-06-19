@@ -8,7 +8,8 @@
 
 require_once("constants.php");
 
-function view_file($full_path) {
+function view_file(string $full_path): void
+{
     // https://classes.engineering.wustl.edu/cse330/index.php?title=PHP#Sending_a_File_to_the_Browser
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     $mime = $finfo->file($full_path);
@@ -18,7 +19,8 @@ function view_file($full_path) {
     readfile($full_path);
 }
 
-function delete_file($full_path) {
+function delete_file(string $full_path): void
+{
     unlink($full_path);
     header("Location:main.php");
 }

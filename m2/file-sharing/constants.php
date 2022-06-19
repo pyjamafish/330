@@ -21,7 +21,8 @@ class FileTooLargeException extends Exception {}
  * has characters besides alphanumerics, underscores, dashes.
  * @throws InvalidUsernameException
  */
-function assert_valid_username($username) {
+function assert_valid_username(string $username): void
+{
     if( !preg_match('/^[\w\-]+$/', $username) ) {
         throw new InvalidUsernameException;
     }
@@ -31,7 +32,8 @@ function assert_valid_username($username) {
  * has characters besides alphanumerics, underscores, dots, dashes, spaces.
  * @throws InvalidFilenameException
  */
-function assert_valid_filename($filename) {
+function assert_valid_filename(string $filename): void
+{
     # Regex modified from the 330 wiki to allow spaces.
     if (!preg_match('/^[\w.\- ]+$/', $filename)) {
         throw new InvalidFilenameException;

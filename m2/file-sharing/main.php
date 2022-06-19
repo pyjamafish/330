@@ -18,7 +18,7 @@ if (!isset($_SESSION['username'])) {
  * @throws QuotaExceededException
  * @throws FileTooLargeException
  */
-function upload($username, $file): bool
+function upload(string $username, array $file): bool
 {
     assert_valid_username($username);
 
@@ -50,22 +50,22 @@ function upload($username, $file): bool
  * Returns true if the given file should be displayed.
  * The "." and ".." files should not be displayed.
  * This function is used as the filter in get_files_array.
- * @param $file
+ * @param string $file
  * @return bool
  */
-function is_displayed_file($file): bool
+function is_displayed_file(string $file): bool
 {
     return $file != "." && $file != "..";
 }
 
-function get_files_array($username): array
+function get_files_array(string $username): array
 {
     $user_dir = sprintf("%s/%s", DATA_ROOT, $username);
     $ls = scandir($user_dir);
     return array_filter($ls, "is_displayed_file");
 }
 
-function get_files_table($username): string
+function get_files_table(string $username): string
 {
     $table = "<table>";
     foreach (get_files_array($username) as $file) {
@@ -81,7 +81,7 @@ function get_files_table($username): string
     return $table;
 }
 
-function get_disk_usage_bytes($username): int
+function get_disk_usage_bytes(string $username): int
 {
     $user_dir = DATA_ROOT . "/" . $username;
 
@@ -93,7 +93,7 @@ function get_disk_usage_bytes($username): int
     return $bytes_total;
 }
 
-function get_disk_usage_string($username): string
+function get_disk_usage_string(string $username): string
 {
     $disk_usage_mb = get_disk_usage_bytes($username) / 1000000;
     $quota_mb = QUOTA_BYTES / 1000000;

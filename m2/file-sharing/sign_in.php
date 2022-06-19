@@ -8,7 +8,7 @@ session_start();
 
 $error = null;
 
-function sign_in(string $username)
+function sign_in(string $username): void
 {
     global $error;
 
