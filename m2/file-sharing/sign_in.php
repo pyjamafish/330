@@ -4,7 +4,6 @@
  */
 
 require_once "config/values.php";
-session_start();
 
 $error = null;
 
@@ -24,9 +23,16 @@ function sign_in(string $username): void
     }
 }
 
-if (isset($_POST["username"])) {
-    sign_in($_POST["username"]);
+function main(): void
+{
+    session_start();
+    if (isset($_POST["username"])) {
+        sign_in($_POST["username"]);
+    }
 }
+
+main();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
