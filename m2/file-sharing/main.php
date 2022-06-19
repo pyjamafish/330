@@ -3,13 +3,45 @@
  * The main page for accessing files.
  * A user must first sign in (using sign_in.php) to see this page.
  */
-require_once("constants.php");
+require_once("config/values.php");
 
 session_start();
 # https://stackoverflow.com/a/15088537
 if (!isset($_SESSION['username'])) {
     header("Location:sign_in.php");
     exit;
+}
+
+class InvalidUsernameException extends Exception {}
+
+class InvalidFilenameException extends Exception {}
+
+class QuotaExceededException extends Exception {}
+
+class FileTooLargeException extends Exception {}
+
+/**
+ * Throw an InvalidUsernameException if the file name
+ * has characters besides alphanumerics, underscores, dashes.
+ * @throws InvalidUsernameException
+ */
+function assert_valid_username(string $username): void
+{
+    if( !preg_match('/^[\w\-]+$/', $username) ) {
+        throw new InvalidUsernameException;
+    }
+}
+/**
+ * Throw an InvalidFilenameException if the file name
+ * has characters besides alphanumerics, underscores, dots, dashes, spaces.
+ * @throws InvalidFilenameException
+ */
+function assert_valid_filename(string $filename): void
+{
+    # Regex modified from the 330 wiki to allow spaces.
+    if (!preg_match('/^[\w.\- ]+$/', $filename)) {
+        throw new InvalidFilenameException;
+    }
 }
 
 /**

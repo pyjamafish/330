@@ -3,7 +3,7 @@
  * The sign-in page.
  */
 
-require_once "constants.php";
+require_once "config/values.php";
 session_start();
 
 $error = null;

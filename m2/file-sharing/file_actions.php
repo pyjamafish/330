@@ -6,7 +6,7 @@
  * and the action is given by the GET variable.
  */
 
-require_once("constants.php");
+require_once("config/values.php");
 
 function view_file(string $full_path): void
 {
