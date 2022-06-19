@@ -42,11 +42,8 @@ $filename = $_GET['file'];
 // filenames are already validated on upload,
 // so no validation needed here
 
-$username = $_SESSION['username'];
-if( !preg_match('/^[\w_\-]+$/', $username) ){
-    echo "Your username appears to be invalid. Please contact the webmaster for help.";
-    exit;
-}
+// usernames are already validated on upload,
+// so no validation needed here
 
 $full_path = sprintf(
     "%s/%s/%s",
