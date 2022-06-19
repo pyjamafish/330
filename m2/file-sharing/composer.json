@@ -1,0 +1,14 @@
+{
+    "name": "fisher/file-sharing",
+    "type": "project",
+    "require-dev": {
+        "phan/phan": "^5.3",
+        "phpstan/phpstan": "^1.7"
+    },
+    "authors": [
+        {
+            "name": "Fisher Sun",
+            "email": "fisher521.fs@gmail.com"
+        }
+    ]
+}
