@@ -25,35 +25,37 @@ function delete_file(string $full_path): void
     header("Location:main.php");
 }
 
-session_start();
-# https://stackoverflow.com/a/15088537
-if (!isset($_SESSION['username'])) {
-    header("Location:sign_in.php");
-    exit;
+function main(): void
+{
+    session_start();
+    # https://stackoverflow.com/a/15088537
+    if (!isset($_SESSION['username'])) {
+        header("Location:sign_in.php");
+        exit;
+    }
+
+    # If no file provided, go to main page
+    if (!isset($_GET['file'])) {
+        header("Location:main.php");
+        exit;
+    }
+
+    $filename = $_GET['file'];
+    // filenames + usernames are already validated on upload,
+    // so no validation needed here
+
+    $full_path = sprintf(
+        "%s/%s/%s",
+        DATA_ROOT,
+        $_SESSION['username'],
+        $filename
+    );
+
+    if ($_GET['action'] == "view") {
+        view_file($full_path);
+    } else if ($_GET['action'] == "delete") {
+        delete_file($full_path);
+    }
 }
 
-# If no file provided, go to main page
-if (!isset($_GET['file'])) {
-    header("Location:main.php");
-    exit;
-}
-
-$filename = $_GET['file'];
-// filenames are already validated on upload,
-// so no validation needed here
-
-// usernames are already validated on upload,
-// so no validation needed here
-
-$full_path = sprintf(
-    "%s/%s/%s",
-    DATA_ROOT,
-    $_SESSION['username'],
-    $filename
-);
-
-if ($_GET['action'] == "view") {
-    view_file($full_path);
-} else if ($_GET['action'] == "delete") {
-    delete_file($full_path);
-}
+main();
