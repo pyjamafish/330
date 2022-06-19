@@ -1,0 +1,11 @@
+RewriteEngine On
+
+## hide .php extension
+# To externally redirect /content/file.php to /file
+RewriteCond %{THE_REQUEST} \s/+file-sharing/public/(.+?)\.php[\s?] [NC]
+RewriteRule ^ /site1/%1 [R=301,NE,L]
+
+## To internally rewrite /file to /content/file.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/file-sharing/public/$1.php -f
+RewriteRule ^site1/(.+?)/?$ file-sharing/public/$1.php [L,NC]
