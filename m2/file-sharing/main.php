@@ -5,13 +5,6 @@
  */
 require_once("config/values.php");
 
-session_start();
-# https://stackoverflow.com/a/15088537
-if (!isset($_SESSION['username'])) {
-    header("Location:sign_in.php");
-    exit;
-}
-
 class InvalidUsernameException extends Exception {}
 
 class InvalidFilenameException extends Exception {}
@@ -77,7 +70,6 @@ function upload(string $username, array $file): bool
     return move_uploaded_file($file['tmp_name'], $upload_dest);
 }
 
-
 /**
  * Returns true if the given file should be displayed.
  * The "." and ".." files should not be displayed.
@@ -131,6 +123,18 @@ function get_disk_usage_string(string $username): string
     $quota_mb = QUOTA_BYTES / 1000000;
     return sprintf("%.2f MB / %.2f MB", $disk_usage_mb, $quota_mb);
 }
+
+function main(): void
+{
+    session_start();
+    # https://stackoverflow.com/a/15088537
+    if (!isset($_SESSION['username'])) {
+        header("Location:sign_in.php");
+        exit;
+    }
+}
+
+main();
 
 ?>
 
