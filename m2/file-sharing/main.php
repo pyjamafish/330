@@ -70,12 +70,12 @@ function get_files_table(string $username): string
     $table = "<table>";
     foreach (get_files_array($username) as $file) {
         $table .= <<<EOD
-            <tr>
-                <td> $file </td>
-                <td><a href="file_actions.php?file=$file&action=view">View</a></td>
-                <td><a href="file_actions.php?file=$file&action=delete">Delete</a></td>
-            </tr>
-        EOD;
+    <tr>
+        <td> $file </td>
+        <td><a href="file_actions.php?file=$file&action=view">View</a></td>
+        <td><a href="file_actions.php?file=$file&action=delete">Delete</a></td>
+    </tr>
+EOD;
     }
     $table .= "</table>";
     return $table;
